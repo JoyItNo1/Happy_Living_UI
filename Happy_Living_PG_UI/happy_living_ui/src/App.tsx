@@ -3,6 +3,8 @@ import './App.css';
 import Loginpage from './Loginpage/Loginpage';
 import Register from './Loginpage/Register';
 import { Switch } from 'antd';
+import Pginfo from './Loginpage/Pginfo';
+
 
 function App() {
   return (
@@ -11,6 +13,7 @@ function App() {
        <Routes>
           <Route path="/" element={<Loginpage />} />
           <Route path="/register" element={<Register />}/>
+          <Route path="/AddPGinfo" element={<Pginfo />}/>
         </Routes>
         </BrowserRouter>
     </div>

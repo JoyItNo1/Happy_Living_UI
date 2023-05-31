@@ -249,7 +249,7 @@ const LoginPage: React.FC = () => {
 
             <Form.Item>
               <b>Add PG info Here: </b>
-              <Button
+              <Link to="/AddPGinfo"><Button
                 type="primary"
                 htmlType="submit"
                 style={{
@@ -264,6 +264,7 @@ const LoginPage: React.FC = () => {
               >
                 Click Here
               </Button>
+              </Link>
             </Form.Item>
           </Form>
           <Form onFinish={handleSetNewPassword}>
