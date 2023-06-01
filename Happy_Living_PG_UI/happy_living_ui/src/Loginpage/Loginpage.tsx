@@ -135,6 +135,7 @@ const LoginPage: React.FC = () => {
                   marginBottom: 30,
                   marginTop: 90,
                   fontWeight: "bold",
+                  textShadow:"2px 2px 2px brown"
                 }}
               >
                 Welcome

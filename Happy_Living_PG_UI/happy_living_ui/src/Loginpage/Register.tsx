@@ -20,7 +20,7 @@ const Register = () => {
     }}> 
         
         <h1
-        style={{color:"purple",paddingTop:"30px"}}>
+        style={{color:"purple",textShadow:"2px 2px 2px pink",paddingTop:"30px"}}>
         Register to Happy Living</h1>
         <div style={{marginLeft:"150px",marginTop:"50px",display:"flex",float:"left"}}>
         <img src={"./Images/pgimg.png"} style={{width:"30%",marginRight:"390px"}} />
