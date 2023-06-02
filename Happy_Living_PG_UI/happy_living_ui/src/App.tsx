@@ -5,6 +5,7 @@ import Register from './Loginpage/Register';
 import Pginfo from './Loginpage/Pginfo';
 import Pay from './Loginpage/Pay';
 import Layoutpage from './Loginpage/Layoutpage/layout';
+//import Layoutpage from './Loginpage/Layoutpage/layout';
 
 
 function App() {

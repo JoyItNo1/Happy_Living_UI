@@ -21,16 +21,16 @@ const LoginPage: React.FC = () => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
       },
-      url: `/api/Auth/https://localhost:7181/api/UserLogin/LogIn?Email=${values.Email}.com&PhoneNumber=${values.PhoneNumber}&Password=${values.password}`,
+      url: "/api/UserLogin/LogIn",
       data: values,
     })
       .then((r: any) => {
-        localStorage.setItem("token", r.data.token);
-        localStorage.setItem("Email", r.data.email);
-        localStorage.setItem("password", r.data.password);
+      sessionStorage.setItem("token", r.data.token);
+      sessionStorage.setItem("Employee_Id", r.data.Employee_Id);
+      sessionStorage.setItem("Role_Id", r.data.Role_Id);
         message.success({
           content: "Login successfull",
-        });
+        }); 
 
         settoken(r.data.token);
         AddProjectForm.resetFields();
