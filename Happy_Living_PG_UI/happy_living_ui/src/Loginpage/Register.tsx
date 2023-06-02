@@ -34,39 +34,48 @@ const Register = () => {
         style={{marginRight:"180px",marginTop:"-270px",float:"right" }}
       >
         <Form.Item
-          label="Name"
+          label={<b>Name</b>}
           name="name"
           rules={[
             { required: true, message: "Please input your name!" },
-          ]}
+            {
+              pattern: /^[A-Za-z]+$/,
+              message: "Please enter alphabetic characters only!",
+            }]}
           style={{ textAlign: "left" }}
         >
-          <Input />
+         <Input autoComplete="off" />
         </Form.Item>
 
         <Form.Item
-          label="Email"
+          label={<b>Email</b>}
           name="email"
           rules={[
             { required: true, message: "Please input your email!" },
-          ]}
+            {
+              pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+              message: "Please enter a valid email address!",
+            }]}
           style={{ textAlign: "left" }}
         >
-          <Input />
+         <Input autoComplete="off" />
         </Form.Item>
 
         <Form.Item
-          label="Phone No."
+          label={<b>Phone No.</b>}
           name="phone"
           rules={[
             { required: true, message: "Please input your phone number!" },
-          ]}
+            {
+              pattern: /^[a-zA-Z0-9]{10}$/,
+              message: "Please enter 10-digit phone number!",
+            }]}
         >
-          <Input />
+          <Input autoComplete="off" />
         </Form.Item>
 
         <Form.Item
-          label="Gender"
+          label={<b>Gender</b>}
           name="gender"
           rules={[
             { required: true, message: "Please select your gender!" },
@@ -74,24 +83,30 @@ const Register = () => {
           style={{ textAlign: "left" }}
         >
           <Radio.Group>
-            <Radio value="Male">Male</Radio>
-            <Radio value="Female">Female</Radio>
+            <Radio value="Male"><b>Male</b></Radio><br></br>
+            <Radio value="Female"><b>Female</b></Radio><br></br>
+            <Radio value="Others"><b>Others</b></Radio>
           </Radio.Group>
         </Form.Item>
 
         <Form.Item
-          label="Password"
+          label={<b>Password</b>}
           name="password"
           style={{ textAlign: "left" }}
           rules={[
             { required: true, message: "Please input your password!" },
+            {
+              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+              message:
+                "Password must be at least 8 characters",
+            },
           ]}
         >
           <Input.Password prefix={<LockOutlined />} placeholder="Password" />
         </Form.Item>
 
         <Form.Item
-          label="Confirm Password"
+          label={<b>Confirm Password</b>}
           name="confirmPassword"
           style={{ textAlign: "left" }}
           rules={[

@@ -4,6 +4,7 @@ import Loginpage from './Loginpage/Loginpage';
 import Register from './Loginpage/Register';
 import Pginfo from './Loginpage/Pginfo';
 import Pay from './Loginpage/Pay';
+import Layoutpage from './Loginpage/Layoutpage/layout';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/register" element={<Register />}/>
           <Route path="/AddPGinfo" element={<Pginfo />}/>
           <Route path="/Pay" element={<Pay />}/>
+          <Route path="/layoutpage" element={<Layoutpage />}/>
         </Routes>
         </BrowserRouter>
     </div>

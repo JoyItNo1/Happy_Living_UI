@@ -21,7 +21,7 @@ const LoginPage: React.FC = () => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
       },
-      url: "/api/Auth/login",
+      url: `/api/Auth/https://localhost:7181/api/UserLogin/LogIn?Email=${values.Email}.com&PhoneNumber=${values.PhoneNumber}&Password=${values.password}`,
       data: values,
     })
       .then((r: any) => {
@@ -118,7 +118,8 @@ const LoginPage: React.FC = () => {
           marginLeft: "500px",
         }}
       >
-        <Card style={{backgroundColor:"#C3B7AC"}}>
+        <Card 
+        style={{backgroundColor:"#C3B7AC"}}>
           <Form
             onFinish={onFinish}
             form={AddProjectForm}

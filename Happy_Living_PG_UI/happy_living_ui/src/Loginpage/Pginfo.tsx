@@ -255,7 +255,7 @@ const Pginfo = () => {
             {
               pattern: /^[a-zA-Z0-9]{10}$/,
               message: "Please enter 10-digit phone number!",
-            } ]}
+            }]}
           style={{ textAlign: "left" }}
         >
           <Input autoComplete="off" />
