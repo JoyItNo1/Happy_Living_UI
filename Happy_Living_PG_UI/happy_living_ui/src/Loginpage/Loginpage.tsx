@@ -2,7 +2,7 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, Modal, message } from "antd";
 import axios from "axios";
 import { useState } from "react";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React, { useRef } from "react";
 import "./Loginpage.css";
 import Register from "./Register";
@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
   const [AddProjectForm] = Form.useForm();
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   const [token, settoken] = useState("");
 
   const onFinish = (values: any) => {
@@ -28,9 +28,27 @@ const LoginPage: React.FC = () => {
       sessionStorage.setItem("token", r.data.token);
       sessionStorage.setItem("Employee_Id", r.data.Employee_Id);
       sessionStorage.setItem("Role_Id", r.data.Role_Id);
-        message.success({
+      debugger
+      if (r.data.role_Id === 1) {
+        navigate("/admin");
+        Modal.success({
+          title: "Welcome",
           content: "Login successfull",
-        }); 
+        });
+      } else if (r.data.role_Id === 2) {
+        navigate("/");
+        Modal.success({
+          title: "Welcome",
+          content: "Login successfull",
+        });
+      } else {
+        message.error("You are not a registered user");
+        navigate("/");
+      }
+        // message.success({
+        //   content: "Login successfull",
+        // }
+        // ); 
 
         settoken(r.data.token);
         AddProjectForm.resetFields();

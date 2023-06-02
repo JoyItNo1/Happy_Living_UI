@@ -4,23 +4,14 @@ import Loginpage from './Loginpage/Loginpage';
 import Register from './Loginpage/Register';
 import Pginfo from './Loginpage/Pginfo';
 import Pay from './Loginpage/Pay';
-import Layoutpage from './Loginpage/Layoutpage/layout';
-//import Layoutpage from './Loginpage/Layoutpage/layout';
+import JoyTS from './Loginpage/Layoutpage/HOME_PAGE';
 
 
 function App() {
   return (
     <div className="App">
-       <BrowserRouter>
-       <Routes>
-          <Route path="/" element={<Loginpage />} />
-          <Route path="/register" element={<Register />}/>
-          <Route path="/AddPGinfo" element={<Pginfo />}/>
-          <Route path="/Pay" element={<Pay />}/>
-          <Route path="/layoutpage" element={<Layoutpage />}/>
-        </Routes>
-        </BrowserRouter>
-    </div>
+    <JoyTS />
+  </div>
   );
 }
 
