@@ -75,6 +75,7 @@ const SuperAdminInfo = () => {
       dataIndex: "created_date",
       key: "created_date",
     },
+ 
   ];
 
   useEffect(() => {
