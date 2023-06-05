@@ -11,6 +11,9 @@ import {
 } from "react-router-dom";
 import LoginPage from "../Loginpage";
 import Layoutpage from "./layout";
+import PgAdminsInfo from "../SuperAdminModel/PgAdminsInfo";
+import UserInfo from "../SuperAdminModel/UserInfo";
+import SuperAdminInfo from "../SuperAdminModel/Admininfo";
 
 
 const { Content } = Layout;
@@ -40,34 +43,32 @@ const Home = () => {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route
-            path="/admin"
+            path="/SuperAdmin/dashboard"
             element={
               "isAuthenticated" ? ( <Layoutpage />) : (  <Navigate to="/" replace />) } />
           {/* <Route
-            path="/employee"
+            path="/SuperAdmin/PgAdminsInfo"
             element={
-              "isAuthenticated" ? <EmpDashboard /> : <Navigate to="/" replace />
+              "isAuthenticated" ? <PgAdminsInfo /> : <Navigate to="/" replace />
             }
           /> */}
-        </Routes>
 
         {/*  admin routes   */}
-        {/* <Routes>
-          <Route
-            path="/admin/dashboard"
+          {/* <Route
+            path="/SuperAdmin/dashboard"
             element={
               "isAuthenticated" ? (
-                <AdminDashboard />
+                <Layoutpage />
               ) : (
                 <Navigate to="/" replace />
               )
             }
-          />
-          <Route
-            path="/admin/configuration"
+          />  */}
+           <Route
+            path="/SuperAdmin/PgAdminsInfo"
             element={
               "isAuthenticated" ? (
-                <Configuration />
+                <PgAdminsInfo />
               ) : (
                 <Navigate to="/" replace />
               )
@@ -75,27 +76,27 @@ const Home = () => {
           />
 
           <Route
-            path="/admin/timesheet_status"
+            path="/SuperAdmin/UserInfo"
             element={
               "isAuthenticated" ? (
-                <TimesheetStatus />
+                <UserInfo />
               ) : (
                 <Navigate to="/" replace />
               )
             }
           />
-          <Route
-            path="/admin/employees"
+         <Route
+            path="/SuperAdmin/SuperAdminInfo"
             element={
-              "isAuthenticated" ? <EmployeeA /> : <Navigate to="/" replace />
+              "isAuthenticated" ? <SuperAdminInfo /> : <Navigate to="/" replace />
             }
           />
-          <Route
+         {/*   <Route
             path="/admin/user_profile"
             element={
               "isAuthenticated" ? <UserProfile /> : <Navigate to="/" replace />
-            }
-          />
+            } */}
+          {/* />  */}
         </Routes>
 
         {/*  employee routes   */}

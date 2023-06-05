@@ -26,11 +26,12 @@ const LoginPage: React.FC = () => {
     })
       .then((r: any) => {
       sessionStorage.setItem("token", r.data.token);
-      sessionStorage.setItem("Employee_Id", r.data.Employee_Id);
-      sessionStorage.setItem("Role_Id", r.data.Role_Id);
+      sessionStorage.setItem("Admin_Id", r.data.admin_Id);
+      sessionStorage.setItem("Role_Id", r.data.role_Id);
+      console.log(r.data.Admin_Id)
       debugger
-      if (r.data.role_Id === 1) {
-        navigate("/admin");
+      if (r.data.role_Id === 3) {
+        navigate("/SuperAdmin/dashboard");
         Modal.success({
           title: "Welcome",
           content: "Login successfull",
