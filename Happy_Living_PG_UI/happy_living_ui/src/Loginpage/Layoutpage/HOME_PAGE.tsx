@@ -44,18 +44,8 @@ const Home = () => {
       <Content>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route
-            path="/register"
-            element={
-               <Register /> }
-          />
-
-          <Route path="/" element={<LoginPage />} />
-          <Route
-            path="/AddPGinfo"
-            element={
-               <Pginfo /> }
-          />
+          <Route path="/register" element={<Register />} />
+          <Route path="/AddPGinfo" element={<Pginfo />}/>
           </Routes>
 
           <Routes>

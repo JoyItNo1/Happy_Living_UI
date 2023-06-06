@@ -1,3 +1,4 @@
+
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, Modal, message } from "antd";
 import axios from "axios";
@@ -134,6 +135,7 @@ const LoginPage: React.FC = () => {
           marginTop: "25px",
           marginBottom: 50,
           marginLeft: "500px",
+          position: "absolute",
         }}
       >
         <Card style={{ backgroundColor: "#C3B7AC" }}>
@@ -159,6 +161,108 @@ const LoginPage: React.FC = () => {
                 Welcome
               </label>
             </Form.Item>
+
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your email!",
+                },
+                {
+                  type: "email",
+                  message: "Please enter a valid email address!",
+                },
+              ]}
+              name="email"
+              style={{ textAlign: "left" }}
+            >
+              <Input
+                prefix={<UserOutlined className="site-form-item-icon" />}
+                placeholder="Email"
+                style={{
+                  height: 40,
+                  justifyContent: "center",
+                  display: "flex",
+                  borderRadius: "5px",
+                }}
+              />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              style={{ textAlign: "left" }}
+              rules={[
+                { required: true, message: "Please input your Password!" },
+              ]}
+            >
+              <Input.Password
+                prefix={<LockOutlined />}
+                placeholder="Password"
+                style={{
+                  justifyContent: "center",
+                  display: "flex",
+                  height: 40,
+                  borderRadius: "5px",
+                }}
+              />
+            </Form.Item>
+
+            
+
+            <Form.Item>
+              <div style={{ display: "flex" }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{
+                    marginLeft: "5%",
+                    display: "flex",
+                    background: "green",
+                    color: "black",
+                    marginTop: 20,
+                  }}
+                >
+                  Login
+                </Button>
+
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginLeft: 65,
+                  }}
+                >
+                  <Form.Item>
+                    <Button
+                      type="primary"
+                      style={{
+                        marginLeft: "-80%",
+                        background: "orange",
+                        color: "black",
+                        marginTop: 20,
+                        display: "left",
+                      }}
+                      onClick={handleForgotPasswordClick}
+                    >
+                      Forgot Password
+                    </Button>
+                  </Form.Item>
+                </div>
+              </div>
+            </Form.Item>
+
+            <h4 style={{ color: "black" }}>
+              Not registerd yet?
+              <Link to="/register">
+                <a> Register Now </a>
+              </Link>
+            </h4>
+
+            <h4 style={{ color: "black" }}>
+              Add PG info Here:
+              <Link to="/AddPGinfo">
+                <a> Add Here</a>
+              </Link>
+            </h4>
 
             <Form onFinish={handleSetNewPassword}>
               <Form.Item
@@ -439,106 +543,6 @@ const LoginPage: React.FC = () => {
                 </Modal>
               </Form.Item>
             </Form>
-
-            <Form.Item
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your email!",
-                },
-                {
-                  type: "email",
-                  message: "Please enter a valid email address!",
-                },
-              ]}
-              name="email"
-              style={{ textAlign: "left" }}
-            >
-              <Input
-                prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="Email"
-                style={{
-                  height: 40,
-                  justifyContent: "center",
-                  display: "flex",
-                  borderRadius: "5px",
-                }}
-              />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              style={{ textAlign: "left" }}
-              rules={[
-                { required: true, message: "Please input your Password!" },
-              ]}
-            >
-              <Input.Password
-                prefix={<LockOutlined />}
-                placeholder="Password"
-                style={{
-                  justifyContent: "center",
-                  display: "flex",
-                  height: 40,
-                  borderRadius: "5px",
-                }}
-              />
-            </Form.Item>
-
-            <Form.Item>
-              <div style={{ display: "flex" }}>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  style={{
-                    marginLeft: "5%",
-                    display: "flex",
-                    background: "green",
-                    color: "black",
-                    marginTop: 20,
-                  }}
-                >
-                  Login
-                </Button>
-
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginLeft: 65,
-                  }}
-                >
-                  <Form.Item>
-                    <Button
-                      type="primary"
-                      style={{
-                        marginLeft: "-80%",
-                        background: "orange",
-                        color: "black",
-                        marginTop: 20,
-                        display: "left",
-                      }}
-                      onClick={handleForgotPasswordClick}
-                    >
-                      Forgot Password
-                    </Button>
-                  </Form.Item>
-                </div>
-              </div>
-            </Form.Item>
-
-            <h4 style={{ color: "black" }}>
-              Not registerd yet?
-              <Link to="/register">
-                <a> Register Now </a>
-              </Link>
-            </h4>
-
-            <h4 style={{ color: "black" }}>
-              Add PG info Here:
-              <Link to="/AddPGinfo">
-                <a> Add Here</a>
-              </Link>
-            </h4>
 
             {/* <Form.Item>
               <b>Add PG info Here: </b>

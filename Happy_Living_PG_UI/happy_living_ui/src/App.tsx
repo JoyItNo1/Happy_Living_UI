@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Loginpage from './Loginpage/Loginpage';
-import Pginfo from './Loginpage/Pginfo';
 import Pay from './Loginpage/Pay';
 import JoyTS from './Loginpage/Layoutpage/HOME_PAGE';
 
