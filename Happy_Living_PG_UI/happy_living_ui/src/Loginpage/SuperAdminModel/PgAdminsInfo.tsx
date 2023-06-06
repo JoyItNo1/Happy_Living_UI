@@ -35,6 +35,28 @@ const PgAdminsInfo = () => {
   const handleMenuClick = (e: any) => {
     setSelectedKeys([e.key]);
   };
+  const deletePGAdmin = (record: any) => {
+    console.log(record.pgAdmin_Id);
+    axios
+      .delete(
+        `/api/SuperAdmin/DeleteAdmin?Id=${record.pgAdmin_Id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          },
+        }
+      )
+      .then((response: any) => {
+        message.success("Successfully Deleted");
+      })
+      .catch((error: any) => {
+        message.error(error.message);
+      });
+    window.location.reload();
+
+  };
   const columns: any = [
     {
       title: (
@@ -102,46 +124,25 @@ const PgAdminsInfo = () => {
       key: "select_Area",
     },
     {
-      title: (
-        <center>
-          <b>Location</b>
-        </center>
-      ),
-      dataIndex: "pG_Location",
-      key: "pG_Location",
-    },
-    {
-      title: (
-        <center>
-          <b>Created Date</b>
-        </center>
-      ),
-      dataIndex: "created_date",
-      key: "created_date",
-    },
-    {
-      title: (
-        <center>
-          <b>Payment_Methods</b>
-        </center>
-      ),
-      dataIndex: "payment_Methods",
-      key: "payment_Methods",
-    },
-    {
-      title: (
-        <center>
-          <b>Stetus</b>
-        </center>
-      ),
-      dataIndex: "Is_Auth",
-      key: "Is_Auth",
+      key: "actions",
+      render: (text: any, record: any) => {
+        if (record.checked) {
+          return (
+            <Button type="primary" danger onClick={() => deletePGAdmin(record)}>
+              Delete
+            </Button>
+          );
+        }
+        return null;
+      },
     },
   ];
   const handleActivateDeactivate = (isActive: boolean) => {
     const val = {
       id: selectedRowKeys, 
+      iS_Active:isActive
     };
+    console.log(val)
     if (selectedRowKeys == null) {
       message.error("No selected row");
       return;
@@ -154,8 +155,7 @@ const PgAdminsInfo = () => {
       },
       url: `/api/SuperAdmin/ActiveInactive`,
       data: val,
-    })
-      .then((response) => {
+    }).then((response) => {
         message.success("Record's status updated");
         window.location.reload();
       })
@@ -231,13 +231,31 @@ const PgAdminsInfo = () => {
             </Menu.Item>
           </Menu>
         </Sider>
-      <div
+        <Card
+          style={{
+            width: "100%",
+            marginTop: 16,
+            paddingTop: 35,
+            //background: "rgba(235, 235, 235,0.6)",
+            background:
+              "-webkit-linear-gradient(45deg,rgba(9, 0, 159, 0.2), rgba(0, 255, 149, 0.2) 55%)",
+          }}
+        >
+            <div
+          style={{
+            display: "flex",
+            float: "right",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+              <div
             hidden={
-              selectedRows.filter((row: any) => row.is_Active == false)
+              selectedRows.filter((row: any) => row.is_Auth == false)
                 .length === 0
             }
           >
-            <Button
+             <Button
               onClick={() => handleActivateDeactivate(true)}
               type="primary"
               style={{
@@ -253,35 +271,27 @@ const PgAdminsInfo = () => {
           </div>
           <div
             hidden={
-              selectedRows.filter((row: any) => row.is_Active == true)
+              selectedRows.filter((row: any) => row.is_Auth == true)
                 .length === 0
             }
-          >
+            >
             <Button
-              type="primary"
-              style={{
-                width: 100,
-                fontWeight: 500,
-                marginRight: 4,
-                background:
-                  "-webkit-linear-gradient(45deg, #8B0000, #FFC0CB 105%)",
-                top:100,
-              }}
+              type="primary"                    
+              // style={{
+              //   width: 100,
+              //   fontWeight: 500,
+              //   marginRight: 4,
+              //   background:
+              //     "-webkit-linear-gradient(45deg, #8B0000, #FFC0CB 105%)",
+              //   top:100,
+              // }}
               onClick={() => handleActivateDeactivate(false)}
             >
               Deactivate
             </Button>
           </div>
-        <Card
-          style={{
-            width: "100%",
-            marginTop: 16,
-            paddingTop: 35,
-            //background: "rgba(235, 235, 235,0.6)",
-            background:
-              "-webkit-linear-gradient(45deg,rgba(9, 0, 159, 0.2), rgba(0, 255, 149, 0.2) 55%)",
-          }}
-        >
+          </div>
+
            <Input.Search
           value={searchText}
           onChange={(e: any) => setSearchText(e.target.value)}
@@ -304,7 +314,7 @@ const PgAdminsInfo = () => {
            dataSource={filteredData}
            columns={columns}
            rowSelection={rowSelection}
-           rowKey={(record: any) => record.employee_Id}
+           rowKey={(record: any) => record.pgAdmin_Id}
            pagination={{
              current: page,
              pageSize,
