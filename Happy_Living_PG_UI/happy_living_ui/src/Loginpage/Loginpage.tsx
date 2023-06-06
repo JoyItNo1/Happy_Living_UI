@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import React, { useRef } from "react";
 import "./Loginpage.css";
-import Register from "./Register";
 import { Link } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
@@ -25,31 +24,31 @@ const LoginPage: React.FC = () => {
       data: values,
     })
       .then((r: any) => {
-      sessionStorage.setItem("token", r.data.token);
-      sessionStorage.setItem("Admin_Id", r.data.admin_Id);
-      sessionStorage.setItem("Role_Id", r.data.role_Id);
-      console.log(r.data.Admin_Id)
-      debugger
-      if (r.data.role_Id === 3) {
-        navigate("/SuperAdmin/dashboard");
-        Modal.success({
-          title: "Welcome",
-          content: "Login successfull",
-        });
-      } else if (r.data.role_Id === 2) {
-        navigate("/");
-        Modal.success({
-          title: "Welcome",
-          content: "Login successfull",
-        });
-      } else {
-        message.error("You are not a registered user");
-        navigate("/");
-      }
+        sessionStorage.setItem("token", r.data.token);
+        sessionStorage.setItem("Admin_Id", r.data.admin_Id);
+        sessionStorage.setItem("Role_Id", r.data.role_Id);
+        console.log(r.data.Admin_Id);
+        debugger;
+        if (r.data.role_Id === 3) {
+          navigate("/SuperAdmin/dashboard");
+          Modal.success({
+            title: "Welcome",
+            content: "Login successfull",
+          });
+        } else if (r.data.role_Id === 2) {
+          navigate("/");
+          Modal.success({
+            title: "Welcome",
+            content: "Login successfull",
+          });
+        } else {
+          message.error("You are not a registered user");
+          navigate("/");
+        }
         // message.success({
         //   content: "Login successfull",
         // }
-        // ); 
+        // );
 
         settoken(r.data.token);
         AddProjectForm.resetFields();
@@ -60,7 +59,7 @@ const LoginPage: React.FC = () => {
         //AddProjectForm.resetFields();
       });
   };
-  <Register />;
+  // <Register />;
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [email, setEmail] = useState("");
@@ -128,7 +127,7 @@ const LoginPage: React.FC = () => {
           height: "600px",
           //background: "linear-gradient(to bottom, #0f0c29, #302b63, #24243e)",
           //background: "linear-gradient(to bottom, #87CEEB, #ADD8E6, #00BFFF)",
-          backgroundColor:"pink",
+          backgroundColor: "pink",
           overflow: "hidden",
           borderRadius: "10px",
           boxShadow: "5px 20px 50px #000",
@@ -137,8 +136,7 @@ const LoginPage: React.FC = () => {
           marginLeft: "500px",
         }}
       >
-        <Card 
-        style={{backgroundColor:"#C3B7AC"}}>
+        <Card style={{ backgroundColor: "#C3B7AC" }}>
           <Form
             onFinish={onFinish}
             form={AddProjectForm}
@@ -155,12 +153,292 @@ const LoginPage: React.FC = () => {
                   marginBottom: 30,
                   marginTop: 90,
                   fontWeight: "bold",
-                  textShadow:"2px 2px 2px brown"
+                  textShadow: "2px 2px 2px brown",
                 }}
               >
                 Welcome
               </label>
             </Form.Item>
+
+            <Form onFinish={handleSetNewPassword}>
+              <Form.Item
+                name="forgotPassword"
+                rules={[{ required: true, message: "Please enter your email" }]}
+              >
+                <Modal
+                  title="Forgot Password"
+                  visible={showForgotPasswordModal}
+                  onCancel={handleFPCancel}
+                  footer={[
+                    otpSent ? (
+                      <>
+                        <Button key="cancel" onClick={handleFPCancel}>
+                          Cancel
+                        </Button>
+
+                        <Button
+                          key="set-password"
+                          type="primary"
+                          onClick={handleSetNewPassword}
+                        >
+                          Set New Password
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          type="link"
+                          style={{ marginRight: "20%" }}
+                          onClick={handleForgotPasswordClick}
+                        >
+                          Try with another way
+                        </Button>
+
+                        <Button key="cancel" onClick={handleFPCancel}>
+                          Cancel
+                        </Button>
+
+                        <Button
+                          key="get-otp"
+                          type="primary"
+                          onClick={handleGetOTP}
+                        >
+                          Get OTP
+                        </Button>
+                      </>
+                    ),
+                  ]}
+                >
+                  {otpSent ? (
+                    <>
+                      <Form.Item
+                        label="OTP"
+                        name="otp"
+                        rules={[
+                          {
+                            required: true,
+
+                            message: "Please enter the OTP you received",
+                          },
+
+                          {
+                            pattern: /^\d{4}$/,
+
+                            message: "Please enter a 4-digit OTP",
+                          },
+                        ]}
+                      >
+                        <Input
+                          value={otp}
+                          onChange={(e: any) => setOtp(e.target.value)}
+                        />
+                      </Form.Item>
+
+                      <Form.Item
+                        label="New Password"
+                        name="newPassword"
+                        rules={[
+                          {
+                            required: true,
+
+                            message: "Please enter a new password",
+                          },
+
+                          {
+                            min: 8,
+
+                            message:
+                              "Password must be at least 8 characters long",
+                          },
+
+                          {
+                            pattern:
+                              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])[A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8,}$/,
+
+                            message:
+                              "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+                          },
+                        ]}
+                      >
+                        <Input.Password
+                          value={newPassword}
+                          onChange={(e: any) => setNewPassword(e.target.value)}
+                        />
+                      </Form.Item>
+                    </>
+                  ) : (
+                    <Form.Item
+                      label="Email"
+                      name="email"
+                      rules={[
+                        {
+                          required: true,
+
+                          message: "Please input your email!",
+                        },
+
+                        {
+                          type: "email",
+
+                          message: "Please enter a valid email address!",
+                        },
+                      ]}
+                    >
+                      <Input
+                        prefix={
+                          <UserOutlined className="site-form-item-icon" />
+                        }
+                        placeholder="Email"
+                        style={{
+                          height: 40,
+
+                          justifyContent: "center",
+
+                          display: "flex",
+
+                          borderRadius: "5px",
+                        }}
+                        value={email}
+                        onChange={(e: any) => setEmail(e.target.value)}
+                      />
+                    </Form.Item>
+                  )}
+                </Modal>
+              </Form.Item>
+            </Form>
+
+            <Form onFinish={handleSetNewPassword}>
+              <Form.Item
+                name="forgotPassword"
+                rules={[{ required: true, message: "Please enter your Email" }]}
+              >
+                <Modal
+                  title="Forgot Password"
+                  visible={showForgotPasswordModal}
+                  onCancel={handleFPCancel}
+                  footer={[
+                    otpSent ? (
+                      <>
+                        <Button key="cancel" onClick={handleFPCancel}>
+                          Cancel
+                        </Button>
+
+                        <Button
+                          key="set-password"
+                          type="primary"
+                          onClick={handleSetNewPassword}
+                        >
+                          Set New Password
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button key="cancel" onClick={handleFPCancel}>
+                          Cancel
+                        </Button>
+
+                        <Button
+                          key="get-otp"
+                          type="primary"
+                          onClick={handleGetOTP}
+                        >
+                          Get OTP
+                        </Button>
+                      </>
+                    ),
+                  ]}
+                >
+                  {otpSent ? (
+                    <>
+                      <Form.Item
+                        label="OTP"
+                        name="otp"
+                        rules={[
+                          {
+                            required: true,
+
+                            message: "Please enter the OTP you received",
+                          },
+
+                          {
+                            pattern: /^\d{4}$/,
+
+                            message: "Please enter a 4-digit OTP",
+                          },
+                        ]}
+                      >
+                        <Input
+                          value={otp}
+                          onChange={(e: any) => setOtp(e.target.value)}
+                        />
+                      </Form.Item>
+
+                      <Form.Item
+                        label="New Password"
+                        name="newPassword"
+                        rules={[
+                          {
+                            required: true,
+
+                            message: "Please enter a new password",
+                          },
+
+                          {
+                            min: 8,
+
+                            message:
+                              "Password must be at least 8 characters long",
+                          },
+
+                          {
+                            pattern:
+                              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])[A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8,}$/,
+
+                            message:
+                              "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+                          },
+                        ]}
+                      >
+                        <Input.Password
+                          value={newPassword}
+                          onChange={(e: any) => setNewPassword(e.target.value)}
+                        />
+                      </Form.Item>
+                    </>
+                  ) : (
+                    <Form.Item
+                      label="Email"
+                      name="email"
+                      rules={[
+                        {
+                          required: true,
+
+                          message: "Please enter your EmailId!",
+                        },
+                      ]}
+                    >
+                      <Input
+                        prefix={
+                          <UserOutlined className="site-form-item-icon" />
+                        }
+                        placeholder="Enter your Email Id"
+                        style={{
+                          height: 40,
+
+                          justifyContent: "center",
+
+                          display: "flex",
+
+                          borderRadius: "5px",
+                        }}
+                        value={email}
+                        onChange={(e: any) => setEmail(e.target.value)}
+                      />
+                    </Form.Item>
+                  )}
+                </Modal>
+              </Form.Item>
+            </Form>
 
             <Form.Item
               rules={[
@@ -232,7 +510,6 @@ const LoginPage: React.FC = () => {
                   <Form.Item>
                     <Button
                       type="primary"
-                      htmlType="submit"
                       style={{
                         marginLeft: "-80%",
                         background: "orange",
@@ -249,285 +526,40 @@ const LoginPage: React.FC = () => {
               </div>
             </Form.Item>
 
-            
-              <b>Not yet Registered? </b>
-              <Link to = "/register"><Button
-                type="primary"
-                htmlType="submit"
-                style={{
-                  marginLeft: 0,
-                  background: "gray",
-                  color: "black",
-                  marginBottom: 40,
-                  marginTop: -20,
-                  marginRight: 5,
-                }}
-              >
-                Register
-              </Button>
+            <h4 style={{ color: "black" }}>
+              Not registerd yet?
+              <Link to="/register">
+                <a> Register Now </a>
               </Link>
-            
+            </h4>
 
-            <Form.Item>
-              <b>Add PG info Here: </b>
-              <Link to="/AddPGinfo"><Button
-                type="primary"
-                htmlType="submit"
-                style={{
-                  marginLeft: 0,
-                  background: "brown",
-                  color: "black",
-                  marginBottom: 20,
-                  marginTop: -40,
-                  marginRight: 5,
-                }}
-                onClick={Register}
-              >
-                Click Here
-              </Button>
+            <h4 style={{ color: "black" }}>
+              Add PG info Here:
+              <Link to="/AddPGinfo">
+                <a> Add Here</a>
               </Link>
-            </Form.Item>
-          </Form>
-          <Form onFinish={handleSetNewPassword}>
-            <Form.Item
-              name="forgotPassword"
-              rules={[{ required: true, message: "Please enter your email" }]}
-            >
-              <Modal
-                title="Forgot Password"
-                visible={showForgotPasswordModal}
-                onCancel={handleFPCancel}
-                footer={[
-                  otpSent ? (
-                    <>
-                      <Button key="cancel" onClick={handleFPCancel}>
-                        Cancel
-                      </Button>
-                      <Button
-                        key="set-password"
-                        type="primary"
-                        onClick={handleSetNewPassword}
-                      >
-                        Set New Password
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button
-                        type="link"
-                        style={{ marginRight: "20%" }}
-                        onClick={handleForgotPasswordClick}
-                      >
-                        Try with another way
-                      </Button>
-                      <Button key="cancel" onClick={handleFPCancel}>
-                        Cancel
-                      </Button>
-                      <Button
-                        key="get-otp"
-                        type="primary"
-                        onClick={handleGetOTP}
-                      >
-                        Get OTP
-                      </Button>
-                    </>
-                  ),
-                ]}
-              >
-                {otpSent ? (
-                  <>
-                    <Form.Item
-                      label="OTP"
-                      name="otp"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter the OTP you received",
-                        },
-                        {
-                          pattern: /^\d{4}$/,
-                          message: "Please enter a 4-digit OTP",
-                        },
-                      ]}
-                    >
-                      <Input
-                        value={otp}
-                        onChange={(e: any) => setOtp(e.target.value)}
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      label="New Password"
-                      name="newPassword"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter a new password",
-                        },
-                        {
-                          min: 8,
-                          message:
-                            "Password must be at least 8 characters long",
-                        },
-                        {
-                          pattern:
-                            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])[A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8,}$/,
-                          message:
-                            "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-                        },
-                      ]}
-                    >
-                      <Input.Password
-                        value={newPassword}
-                        onChange={(e: any) => setNewPassword(e.target.value)}
-                      />
-                    </Form.Item>
-                  </>
-                ) : (
-                  <Form.Item
-                    label="Email"
-                    name="email"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your email!",
-                      },
-                      {
-                        type: "email",
-                        message: "Please enter a valid email address!",
-                      },
-                    ]}
-                  >
-                    <Input
-                      prefix={<UserOutlined className="site-form-item-icon" />}
-                      placeholder="Email"
-                      style={{
-                        height: 40,
-                        justifyContent: "center",
-                        display: "flex",
-                        borderRadius: "5px",
-                      }}
-                      value={email}
-                      onChange={(e: any) => setEmail(e.target.value)}
-                    />
-                  </Form.Item>
-                )}
-              </Modal>
-            </Form.Item>
-          </Form>
-          <Form onFinish={handleSetNewPassword}>
-            <Form.Item
-              name="forgotPassword"
-              rules={[{ required: true, message: "Please enter your Email" }]}
-            >
-              <Modal
-                title="Forgot Password"
-                visible={showForgotPasswordModal}
-                onCancel={handleFPCancel}
-                footer={[
-                  otpSent ? (
-                    <>
-                      <Button key="cancel" onClick={handleFPCancel}>
-                        Cancel
-                      </Button>
-                      <Button
-                        key="set-password"
-                        type="primary"
-                        onClick={handleSetNewPassword}
-                      >
-                        Set New Password
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button key="cancel" onClick={handleFPCancel}>
-                        Cancel
-                      </Button>
-                      <Button
-                        key="get-otp"
-                        type="primary"
-                        onClick={handleGetOTP}
-                      >
-                        Get OTP
-                      </Button>
-                    </>
-                  ),
-                ]}
-              >
-                {otpSent ? (
-                  <>
-                    <Form.Item
-                      label="OTP"
-                      name="otp"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter the OTP you received",
-                        },
-                        {
-                          pattern: /^\d{4}$/,
-                          message: "Please enter a 4-digit OTP",
-                        },
-                      ]}
-                    >
-                      <Input
-                        value={otp}
-                        onChange={(e: any) => setOtp(e.target.value)}
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      label="New Password"
-                      name="newPassword"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter a new password",
-                        },
-                        {
-                          min: 8,
-                          message:
-                            "Password must be at least 8 characters long",
-                        },
-                        {
-                          pattern:
-                            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])[A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8,}$/,
-                          message:
-                            "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-                        },
-                      ]}
-                    >
-                      <Input.Password
-                        value={newPassword}
-                        onChange={(e: any) => setNewPassword(e.target.value)}
-                      />
-                    </Form.Item>
-                  </>
-                ) : (
-                  <Form.Item
-                    label="Email"
-                    name="email"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter your EmailId!",
-                      },
-                    ]}
-                  >
-                    <Input
-                      prefix={<UserOutlined className="site-form-item-icon" />}
-                      placeholder="Enter your Email Id"
-                      style={{
-                        height: 40,
-                        justifyContent: "center",
-                        display: "flex",
-                        borderRadius: "5px",
-                      }}
-                      value={email}
-                      onChange={(e: any) => setEmail(e.target.value)}
-                    />
-                  </Form.Item>
-                )}
-              </Modal>
-            </Form.Item>
+            </h4>
+
+            {/* <Form.Item>
+              <b>Add PG info Here: </b>
+              <Link to="/AddPGinfo">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{
+                    marginLeft: 0,
+                    background: "brown",
+                    color: "black",
+                    marginBottom: 20,
+                    marginTop: -40,
+                    marginRight: 5,
+                  }}
+                  //onClick={Register}
+                >
+                  Click Here
+                </Button>
+              </Link>
+            </Form.Item> */}
           </Form>
         </Card>
       </div>

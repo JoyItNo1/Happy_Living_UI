@@ -14,14 +14,16 @@ import Layoutpage from "./layout";
 import PgAdminsInfo from "../SuperAdminModel/PgAdminsInfo";
 import UserInfo from "../SuperAdminModel/UserInfo";
 import SuperAdminInfo from "../SuperAdminModel/Admininfo";
-
-
+import { Register } from "../Register";
+import Pginfo from "../Pginfo";
 const { Content } = Layout;
 
-const Home = () => {
+const Home = () => { 
+  debugger
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
   );
+ 
   const navigate = useNavigate();
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -33,7 +35,7 @@ const Home = () => {
       navigate("/");
       sessionStorage.removeItem("token");
     }
-  }, [navigate]);
+  }, []);
   useEffect(() => {
     sessionStorage.setItem("isAuthenticated", isAuthenticated.toString());
   }, [isAuthenticated]);
@@ -43,27 +45,26 @@ const Home = () => {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route
-            path="/SuperAdmin/dashboard"
+            path="/register"
             element={
-              "isAuthenticated" ? ( <Layoutpage />) : (  <Navigate to="/" replace />) } />
-          {/* <Route
-            path="/SuperAdmin/PgAdminsInfo"
-            element={
-              "isAuthenticated" ? <PgAdminsInfo /> : <Navigate to="/" replace />
-            }
-          /> */}
+               <Register /> }
+          />
 
-        {/*  admin routes   */}
-          {/* <Route
+          <Route path="/" element={<LoginPage />} />
+          <Route
+            path="/AddPGinfo"
+            element={
+               <Pginfo /> }
+          />
+          </Routes>
+
+          <Routes>
+         <Route
             path="/SuperAdmin/dashboard"
             element={
-              "isAuthenticated" ? (
-                <Layoutpage />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            }
-          />  */}
+               <Layoutpage />  } />
+          
+
            <Route
             path="/SuperAdmin/PgAdminsInfo"
             element={
@@ -90,56 +91,11 @@ const Home = () => {
             element={
               "isAuthenticated" ? <SuperAdminInfo /> : <Navigate to="/" replace />
             }
-          />
-         {/*   <Route
-            path="/admin/user_profile"
-            element={
-              "isAuthenticated" ? <UserProfile /> : <Navigate to="/" replace />
-            } */}
-          {/* />  */}
+          /> 
+        
         </Routes>
 
-        {/*  employee routes   */}
-        {/* <Routes>
-          <Route
-            path="/employee/dashboard"
-            element={
-              "isAuthenticated" ? <EmpDashboard /> : <Navigate to="/" replace />
-            }
-          />
-          <Route
-            path="/employee/timesheet"
-            element={
-              "isAuthenticated" ? <EmpTimesheet /> : <Navigate to="/" replace />
-            }
-          /> */}
-          {/* <Route
-            path="/employee/timesheetsummary"
-            element={
-              "isAuthenticated" ? (
-                <TimeSheetSummary />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            }
-          /> */}
-          {/* <Route
-            path="/employee/hrcontact"
-            element={
-              "isAuthenticated" ? (
-                <HRContactInfo />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            }
-          />
-          <Route
-            path="/employee/userprofile"
-            element={
-              "isAuthenticated" ? <EUserProfile /> : <Navigate to="/" replace />
-            }
-          /> */}
-        {/* </Routes>  */}
+        
       </Content>
     </Layout>
   );

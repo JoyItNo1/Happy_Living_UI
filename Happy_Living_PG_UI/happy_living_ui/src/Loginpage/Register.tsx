@@ -2,9 +2,10 @@ import { Button, Form, Input, Radio } from 'antd';
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import React from 'react';
 
-const Register = () => {
+export function Register ()  {
   const onFinish = (values:any) => {
     console.log('Received values:', values);
+    debugger
   };
 
   return (
@@ -138,5 +139,3 @@ const Register = () => {
    
   );
 };
-
-export default Register;
