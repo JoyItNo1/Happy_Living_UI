@@ -1,4 +1,4 @@
-import { Button, Card, Layout, Menu, Table, message, theme } from "antd";
+import { Button, Card, Checkbox, Input, Layout, Menu, Table, message, theme } from "antd";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Sider from "antd/es/layout/Sider";
@@ -11,15 +11,21 @@ import {
   ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const PgAdminsInfo = () => {
   const [tableData, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
   const [selectedKeys, setSelectedKeys] = useState<Array<any>>([]);
   const [collapsed, setCollapsed] = useState(false);
+  const [selectedRows, setSelectedRows] = useState<{ isActive: boolean }[]>([]);
+  const [page, setPage]: any = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const pageSizeOptions = [3, 5, 10, 20];
+  const [searchText, setSearchText] = useState("");
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const handlePagination = (pagination: any) => {
+    setPage(pagination.current);
+    setPageSize(pagination.pageSize);
+  };
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -29,7 +35,6 @@ const PgAdminsInfo = () => {
   const handleMenuClick = (e: any) => {
     setSelectedKeys([e.key]);
   };
-
   const columns: any = [
     {
       title: (
@@ -132,53 +137,37 @@ const PgAdminsInfo = () => {
       dataIndex: "Is_Auth",
       key: "Is_Auth",
     },
-    {
-      title: "Actions",
-      dataIndex: "actions",
-      key: "actions",
-      render: (value: any, item: any, index: any) => (
-        <div>
-          <Button
-            type="primary"
-            onClick={handleEdit}
-            style={{
-              background:
-                "-webkit-linear-gradient(45deg, rgba(9, 0, 159, 0.3), rgba(0, 255, 149, 0.3) 95%)",
-              color: "black",
-              fontWeight: "bold",
-            }}
-          >
-            <EditFilled />
-          </Button>
-          {/* <button onClick={() => handleDelete(item)}>
-              <FontAwesomeIcon icon={faTrash} />
-              Delete
-            </button> */}
-        </div>
-      ),
-    },
   ];
-
-  const handleEdit = (values: any) => {
+  const handleActivateDeactivate = (isActive: boolean) => {
+    const val = {
+      id: selectedRowKeys, 
+    };
+    if (selectedRowKeys == null) {
+      message.error("No selected row");
+      return;
+    }
     axios({
       method: "put",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        accept: "*/*",
       },
       url: `/api/SuperAdmin/ActiveInactive`,
-      data: values,
+      data: val,
     })
       .then((response) => {
-        message.success("Record have been updated successfully");
+        message.success("Record's status updated");
         window.location.reload();
       })
       .catch((error) => {
-        message.error(error.response.data);
+        message.error(error.message);
       });
   };
 
+  const filteredData = tableData.filter((record: any) => {
+    const values = Object.values(record).join(" ").toLowerCase();
+    return values.includes(searchText.toLowerCase());
+  });
   useEffect(() => {
     getData();
   }, []);
@@ -201,6 +190,15 @@ const PgAdminsInfo = () => {
         message.error(error.message);
       });
   };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: (selectedKeys: any, selectedRows: any) => {
+      setSelectedRowKeys(selectedKeys);
+      setSelectedRows(selectedRows);
+    },
+  };
+
   return (
     <div>
       <Layout style={{ minHeight: "100vh" }}>
@@ -233,13 +231,47 @@ const PgAdminsInfo = () => {
             </Menu.Item>
           </Menu>
         </Sider>
-        {/* <h1  style={{
-          fontSize: 25,
-          background: "-webkit-linear-gradient(45deg, #09009f, #00ff95 20%)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-        }}
-      >HR Contact Info</h1> */}
+      <div
+            hidden={
+              selectedRows.filter((row: any) => row.is_Active == false)
+                .length === 0
+            }
+          >
+            <Button
+              onClick={() => handleActivateDeactivate(true)}
+              type="primary"
+              style={{
+                width: 85,
+                background:
+                  "-webkit-linear-gradient(45deg, darkgreen, lightgreen 105%)",
+                fontWeight: 500,
+                marginRight: 4,
+              }}
+            >
+              Activate
+            </Button>
+          </div>
+          <div
+            hidden={
+              selectedRows.filter((row: any) => row.is_Active == true)
+                .length === 0
+            }
+          >
+            <Button
+              type="primary"
+              style={{
+                width: 100,
+                fontWeight: 500,
+                marginRight: 4,
+                background:
+                  "-webkit-linear-gradient(45deg, #8B0000, #FFC0CB 105%)",
+                top:100,
+              }}
+              onClick={() => handleActivateDeactivate(false)}
+            >
+              Deactivate
+            </Button>
+          </div>
         <Card
           style={{
             width: "100%",
@@ -250,11 +282,39 @@ const PgAdminsInfo = () => {
               "-webkit-linear-gradient(45deg,rgba(9, 0, 159, 0.2), rgba(0, 255, 149, 0.2) 55%)",
           }}
         >
+           <Input.Search
+          value={searchText}
+          onChange={(e: any) => setSearchText(e.target.value)}
+          placeholder="Search"
+          style={{
+            width: 120,
+            display: "flex",
+            float: "left",
+            textAlign: "center",
+            marginRight: 5,
+            borderRadius: 4,
+            padding: 3,
+            background:
+              "-webkit-linear-gradient(45deg, rgba(9, 0, 159, 0.9), rgba(0, 255, 149, 0.5) 105%)",
+            color: "black",
+            fontWeight: "bold",
+          }}
+        />
           <Table
-            bordered
-            columns={columns}
-            dataSource={tableData}
-            pagination={false}
+           dataSource={filteredData}
+           columns={columns}
+           rowSelection={rowSelection}
+           rowKey={(record: any) => record.employee_Id}
+           pagination={{
+             current: page,
+             pageSize,
+             showTotal: (total: any) => `Total ${total} items`,
+             showSizeChanger: true,
+             pageSizeOptions,
+           }}
+           onChange={handlePagination}
+           style={{ width: 4500, fontWeight: 600, marginTop: 8 }}
+           scroll={{ x: "max-content" }}
           ></Table>
         </Card>
       </Layout>
