@@ -11,7 +11,6 @@ const UserInfo = () => {
 const [pageSize, setPageSize] = useState(5);
 const [selectedKeys, setSelectedKeys] = useState<Array<any>>([]);
   const [collapsed, setCollapsed] = useState(false);
-  const [checkAll, setCheckAll] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -21,19 +20,7 @@ const [selectedKeys, setSelectedKeys] = useState<Array<any>>([]);
   const handleMenuClick = (e: any) => {
     setSelectedKeys([e.key]);
   };
-  const handleCheckAll = (e: any) => {
-    const checked = e.target.checked;
-    const newData: any = tableData.map((item: any) => ({ ...item, checked }));
-    setData(newData);
-    setCheckAll(checked);
 
-  };
-  const handleCheckboxChange = (checked: boolean, record: any) => {
-    const newData : any = [...tableData];
-    const index = newData.findIndex((item: any) => record.id === item.id);
-    newData[index].checked = checked;
-    setData(newData);
-  };
 
   const columns: any = [
     {

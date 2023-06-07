@@ -1,14 +1,4 @@
-import {
-  Button,
-  Card,
-  Checkbox,
-  Input,
-  Layout,
-  Menu,
-  Table,
-  message,
-  theme,
-} from "antd";
+import { Button, Card, Checkbox, Input, Layout, Menu, Table, message, theme } from "antd";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Sider from "antd/es/layout/Sider";
@@ -48,13 +38,16 @@ const PgAdminsInfo = () => {
   const deletePGAdmin = (record: any) => {
     console.log(record.pgAdmin_Id);
     axios
-      .delete(`/api/SuperAdmin/DeleteAdmin?Id=${record.pgAdmin_Id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-      })
+      .delete(
+        `/api/SuperAdmin/DeleteAdmin?Id=${record.pgAdmin_Id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          },
+        }
+      )
       .then((response: any) => {
         message.success("Successfully Deleted");
       })
@@ -62,8 +55,8 @@ const PgAdminsInfo = () => {
         message.error(error.message);
       });
     window.location.reload();
-  };
 
+  };
   const columns: any = [
     {
       title: (
@@ -131,26 +124,25 @@ const PgAdminsInfo = () => {
       key: "select_Area",
     },
     {
-      //for actionsss
       key: "actions",
       render: (text: any, record: any) => {
-        return (
-          <div>
-            {/* hidden={!record.checked}> */}
+        if (record.checked) {
+          return (
             <Button type="primary" danger onClick={() => deletePGAdmin(record)}>
               Delete
             </Button>
-          </div>
-        );
+          );
+        }
+        return null;
       },
     },
   ];
   const handleActivateDeactivate = (isActive: boolean) => {
     const val = {
-      id: selectedRowKeys,
-      iS_Active: isActive,
+      id: selectedRowKeys, 
+      iS_Active:isActive
     };
-    console.log(val);
+    console.log(val)
     if (selectedRowKeys == null) {
       message.error("No selected row");
       return;
@@ -163,8 +155,7 @@ const PgAdminsInfo = () => {
       },
       url: `/api/SuperAdmin/ActiveInactive`,
       data: val,
-    })
-      .then((response) => {
+    }).then((response) => {
         message.success("Record's status updated");
         window.location.reload();
       })
@@ -207,6 +198,7 @@ const PgAdminsInfo = () => {
       setSelectedRows(selectedRows);
     },
   };
+
   return (
     <div>
       <Layout style={{ minHeight: "100vh" }}>
@@ -244,86 +236,95 @@ const PgAdminsInfo = () => {
             width: "100%",
             marginTop: 16,
             paddingTop: 35,
+            //background: "rgba(235, 235, 235,0.6)",
             background:
               "-webkit-linear-gradient(45deg,rgba(9, 0, 159, 0.2), rgba(0, 255, 149, 0.2) 55%)",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              float: "right",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
+            <div
+          style={{
+            display: "flex",
+            float: "right",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+              <div
+            hidden={
+              selectedRows.filter((row: any) => row.is_Auth == false)
+                .length === 0
+            }
           >
-            <div
-              hidden={
-                selectedRows.filter((row: any) => row.is_Auth == false)
-                  .length === 0
-              }
+             <Button
+              onClick={() => handleActivateDeactivate(true)}
+              type="primary"
+              style={{
+                width: 85,
+                background:
+                  "-webkit-linear-gradient(45deg, darkgreen, lightgreen 105%)",
+                fontWeight: 500,
+                marginRight: 4,
+              }}
             >
-              <Button
-                onClick={() => handleActivateDeactivate(true)}
-                type="primary"
-                style={{
-                  width: 85,
-                  background:
-                    "-webkit-linear-gradient(45deg, darkgreen, lightgreen 105%)",
-                  fontWeight: 500,
-                  marginRight: 4,
-                }}
-              >
-                Activate
-              </Button>
-            </div>
-            <div
-              hidden={
-                selectedRows.filter((row: any) => row.is_Auth == true)
-                  .length === 0
-              }
+              Activate
+            </Button>
+          </div>
+          <div
+            hidden={
+              selectedRows.filter((row: any) => row.is_Auth == true)
+                .length === 0
+            }
             >
-              <Button
-                type="primary"
-                onClick={() => handleActivateDeactivate(false)}
-              >
-                Deactivate
-              </Button>
-            </div>
+            <Button
+              type="primary"                    
+              // style={{
+              //   width: 100,
+              //   fontWeight: 500,
+              //   marginRight: 4,
+              //   background:
+              //     "-webkit-linear-gradient(45deg, #8B0000, #FFC0CB 105%)",
+              //   top:100,
+              // }}
+              onClick={() => handleActivateDeactivate(false)}
+            >
+              Deactivate
+            </Button>
+          </div>
           </div>
 
-          <Input.Search
-            value={searchText}
-            onChange={(e: any) => setSearchText(e.target.value)}
-            placeholder="Search"
-            style={{
-              width: 120,
-              display: "flex",
-              float: "left",
-              textAlign: "center",
-              marginRight: 5,
-              borderRadius: 4,
-              padding: 3,
-              background:
-                "-webkit-linear-gradient(45deg, rgba(9, 0, 159, 0.9), rgba(0, 255, 149, 0.5) 105%)",
-              color: "black",
-              fontWeight: "bold",
-            }}
-          />
+           <Input.Search
+          value={searchText}
+          onChange={(e: any) => setSearchText(e.target.value)}
+          placeholder="Search"
+          style={{
+            width: 120,
+            display: "flex",
+            float: "left",
+            textAlign: "center",
+            marginRight: 5,
+            borderRadius: 4,
+            padding: 3,
+            background:
+              "-webkit-linear-gradient(45deg, rgba(9, 0, 159, 0.9), rgba(0, 255, 149, 0.5) 105%)",
+            color: "black",
+            fontWeight: "bold",
+          }}
+        />
           <Table
-            dataSource={filteredData}
-            columns={columns}
-            rowSelection={rowSelection}
-            rowKey={(record: any) => record.pgAdmin_Id}
-            pagination={{
-              current: page,
-              pageSize,
-              showTotal: (total: any) => `Total ${total} items`,
-              showSizeChanger: true,
-              pageSizeOptions,
-            }}
-            onChange={handlePagination}
-            style={{ width: 4500, fontWeight: 600, marginTop: 8 }}
-            scroll={{ x: "max-content" }}
+           dataSource={filteredData}
+           columns={columns}
+           rowSelection={rowSelection}
+           rowKey={(record: any) => record.pgAdmin_Id}
+           pagination={{
+             current: page,
+             pageSize,
+             showTotal: (total: any) => `Total ${total} items`,
+             showSizeChanger: true,
+             pageSizeOptions,
+           }}
+           onChange={handlePagination}
+           style={{ width: 4500, fontWeight: 600, marginTop: 8 }}
+           scroll={{ x: "max-content" }}
           ></Table>
         </Card>
       </Layout>
