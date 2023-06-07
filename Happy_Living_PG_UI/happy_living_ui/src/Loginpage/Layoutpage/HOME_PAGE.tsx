@@ -16,6 +16,8 @@ import UserInfo from "../SuperAdminModel/UserInfo";
 import SuperAdminInfo from "../SuperAdminModel/Admininfo";
 import { Register } from "../Register";
 import Pginfo from "../Pginfo";
+import UserDashboard from "../UserModule/UserDashboard";
+import AddpageToUser from "../UserModule/SearchPG";
 const { Content } = Layout;
 
 const Home = () => { 
@@ -83,6 +85,27 @@ const Home = () => {
             }
           /> 
         
+        </Routes>
+           {/* User Module */}
+           <Routes>
+        <Route
+            path="/User/UserDashboard"
+            element={
+              "isAuthenticated" ? <UserDashboard /> : <Navigate to="/" replace />
+            }
+          /> 
+          <Route
+            path="/User/SearchPG"
+            element={
+              "isAuthenticated" ? <AddpageToUser /> : <Navigate to="/" replace />
+            }
+          /> 
+          <Route
+            path="/User/UserInfo"
+            element={
+              "isAuthenticated" ? <UserInfo /> : <Navigate to="/" replace />
+            }
+          /> 
         </Routes>
 
         
