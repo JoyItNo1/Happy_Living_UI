@@ -13,7 +13,7 @@ export function Register ()  {
     style={{
     backgroundColor:"lavender",
     width:"80%",
-    height:"590px",
+    height:"600px",
     marginLeft:"130px",
     marginTop:"30px",
     borderRadius:"10px",
@@ -21,7 +21,7 @@ export function Register ()  {
     }}> 
         
         <h1
-        style={{color:"purple",textShadow:"2px 2px 2px pink",paddingTop:"30px"}}>
+        style={{color:"purple",textShadow:"2px 2px 2px pink",paddingTop:"30px",fontSize:"35px"}}>
         Register to Happy Living</h1>
         <div style={{marginLeft:"150px",marginTop:"50px",display:"flex",float:"left"}}>
         <img src={"./Images/pgimg.png"} style={{width:"30%",marginRight:"390px"}} />
@@ -32,7 +32,7 @@ export function Register ()  {
         wrapperCol={{ span: 14 }}
         layout="horizontal"
         onFinish={onFinish}
-        style={{marginRight:"180px",marginTop:"-270px",float:"right" }}
+        style={{marginRight:"180px",marginTop:"-300px",float:"right" }}
       >
         <Form.Item
           label={<b>Name</b>}
