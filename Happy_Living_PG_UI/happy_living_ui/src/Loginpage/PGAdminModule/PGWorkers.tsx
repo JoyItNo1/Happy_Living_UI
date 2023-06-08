@@ -93,7 +93,7 @@ const PGWorkers: React.FC = () => {
     console.log(record.pgWorks_Id);
     axios
       .delete(
-        `/api/PGAdmin/DeleteWorker?Id=${record.pgWorks_Id}`,
+        `https://localhost:7181/api/PGAdmin/DeleteWorker?Id=${record.pgWorks_Id}`,
         {
           headers: {
             "Content-Type": "application/json",

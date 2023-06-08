@@ -9,6 +9,7 @@ import {
 import { Layout, Menu, Button, theme, message, Checkbox, Table } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useEffect } from "react";
 
 const { Header, Sider, Content } = Layout;
 
@@ -44,8 +45,14 @@ const PGADminUSerInfo: React.FC = () => {
     setData(newData);
     setCheckAll(checked);
   };
+
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   //getting data
-  const getroomdetails = () => {
+  const getData = () => {
     axios({
       method: "get",
       headers: {
@@ -53,7 +60,7 @@ const PGADminUSerInfo: React.FC = () => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
       },
-      url: "/api/PGAdmin/RoomInfo",
+      url: "/api/PGAdmin/Userinfo",
     })
       .then((r: any) => {
         console.log(r.data);
@@ -81,18 +88,18 @@ const PGADminUSerInfo: React.FC = () => {
      {
        title: (
          <center>
-           <b>Worker Id</b>
+           <b>PG User Id</b>
          </center>
        ),
-       dataIndex: "pgWorks_Id",
-       key: "pgWorks_Id",
+       dataIndex: "pgUser_Id",
+       key: "pgUser_Id",
        render: (value: any, item: any, index: any) =>
          (page - 1) * pageSize + index + 1,
      },
      {
        title: (
          <center>
-           <b>name</b>
+           <b>Name</b>
          </center>
        ),
        dataIndex: "name",
@@ -101,7 +108,7 @@ const PGADminUSerInfo: React.FC = () => {
      {
        title: (
          <center>
-           <b>room_sharing</b>
+           <b>Gender</b>
          </center>
        ),
        dataIndex: "room_sharing",
@@ -110,30 +117,57 @@ const PGADminUSerInfo: React.FC = () => {
      {
        title: (
          <center>
-           <b>room_no</b>
+           <b>Email</b>
          </center>
        ),
-       dataIndex: "room_no",
-       key: "room_no",
+       dataIndex: "email",
+       key: "email",
      },
      {
        title: (
          <center>
-           <b>flore_no</b>
+           <b>Phone Number</b>
          </center>
        ),
-       dataIndex: "flore_no",
-       key: "flore_no",
+       dataIndex: "phoneNumber",
+       key: "phoneNumber",
      },
      {
        title: (
          <center>
-           <b>building_No</b>
+           <b>Building.No</b>
          </center>
        ),
        dataIndex: "building_No",
        key: "building_No",
      },
+     {
+        title: (
+          <center>
+            <b>Floor.No</b>
+          </center>
+        ),
+        dataIndex: "flour_no",
+        key: "flour_no",
+      },
+      {
+        title: (
+          <center>
+            <b>Room.No</b>
+          </center>
+        ),
+        dataIndex: "room_no",
+        key: "room_no",
+      },
+      {
+        title: (
+          <center>
+            <b>Status</b>
+          </center>
+        ),
+        dataIndex: "stetus",
+        key: "stetus",
+      },
     
    ];
 
