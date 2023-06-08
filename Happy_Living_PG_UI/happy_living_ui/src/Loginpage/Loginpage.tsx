@@ -30,14 +30,20 @@ const LoginPage: React.FC = () => {
         sessionStorage.setItem("Role_Id", r.data.role_Id);
         console.log(r.data.Admin_Id);
         debugger;
-        if (r.data.role_Id === 3) {
+        if (r.data.role_Id === 1) {
+          navigate("/PGAdmin/AdminDashboard");
+          Modal.success({
+            title: "Welcome",
+            content: "Login successfull",
+          });
+        } else if (r.data.role_Id === 3) {
           navigate("/SuperAdmin/dashboard");
           Modal.success({
             title: "Welcome",
             content: "Login successfull",
           });
-        } else if (r.data.role_Id === 2) {
-          navigate("/");
+        }else if (r.data.role_Id === 4) {
+          navigate("/User/UserDashboard");
           Modal.success({
             title: "Welcome",
             content: "Login successfull",

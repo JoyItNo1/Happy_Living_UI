@@ -11,13 +11,17 @@ import {
 } from "react-router-dom";
 import LoginPage from "../Loginpage";
 import Layoutpage from "./layout";
-import PgAdminsInfo from "../SuperAdminModel/PgAdminsInfo";
-import UserInfo from "../SuperAdminModel/UserInfo";
-import SuperAdminInfo from "../SuperAdminModel/Admininfo";
+import PgAdminsInfo from "../SuperAdminModule/PgAdminsInfo";
+import UserInfo from "../SuperAdminModule/UserInfo";
+import SuperAdminInfo from "../SuperAdminModule/Admininfo";
 import { Register } from "../Register";
 import Pginfo from "../Pginfo";
 import UserDashboard from "../UserModule/UserDashboard";
 import AddpageToUser from "../UserModule/SearchPG";
+import AdminDashboard from "../PGAdminModule/PGAdminDashboard";
+import PGADminUSerInfo from "../PGAdminModule/PGUSerInfo";
+import PGWorkers from "../PGAdminModule/PGWorkers";
+import PGUserInfo from "../UserModule/PGUserInfo";
 const { Content } = Layout;
 
 const Home = () => { 
@@ -101,9 +105,31 @@ const Home = () => {
             }
           /> 
           <Route
-            path="/User/UserInfo"
+            path="/User/PGUserInfo"
             element={
-              "isAuthenticated" ? <UserInfo /> : <Navigate to="/" replace />
+              "isAuthenticated" ? <PGUserInfo /> : <Navigate to="/" replace />
+            }
+          /> 
+        </Routes>
+
+        {/* PG Admin  */}
+           <Routes>
+        <Route
+            path="/PGAdmin/AdminDashboard"
+            element={
+              "isAuthenticated" ? <AdminDashboard /> : <Navigate to="/" replace />
+            }
+          /> 
+          <Route
+            path="/PGAdmin/PGWorkers"
+            element={
+              "isAuthenticated" ? <PGWorkers/> : <Navigate to="/" replace />
+            }
+          /> 
+          <Route
+            path="/PGAdmin/PGUserInfo"
+            element={
+              "isAuthenticated" ? <PGADminUSerInfo /> : <Navigate to="/" replace />
             }
           /> 
         </Routes>

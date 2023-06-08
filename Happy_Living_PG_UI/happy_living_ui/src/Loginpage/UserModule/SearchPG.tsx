@@ -69,20 +69,14 @@ const [selectedKeys, setSelectedKeys] = useState<Array<any>>([]);
               style={{ marginTop: 5 }}
               selectedKeys={selectedKeys}
             >
-              <Menu.Item key="" icon={<DesktopOutlined />}>
-                <Link to="/SuperAdmin/dashboard">Dashboard</Link>
+             <Menu.Item key="" icon={<DesktopOutlined />}>
+                <Link to="/User/UserDashboard">User Dashboard</Link>
               </Menu.Item>
-              <Menu.Item key="PgAdminsInfoFOR" icon={<FieldTimeOutlined />}>
-                <Link to="/SuperAdmin/PgAdminsInfo">PG Admins Info</Link>
+              <Menu.Item key="SearchPG" icon={<FieldTimeOutlined />}>
+                <Link to="/User/SearchPG">Search PG</Link>
               </Menu.Item>
               <Menu.Item key="UserInfo" icon={<ProfileOutlined />}>
-                <Link to="/SuperAdmin/UserInfo">UserInfo </Link>
-              </Menu.Item>
-              <Menu.Item key="SuperAdminInfo" icon={<PhoneOutlined />}>
-                <Link to="/SuperAdmin/SuperAdminInfo">Super Admin Info</Link>
-              </Menu.Item>
-              <Menu.Item key="SuperAdminAddPgtoUser" icon={<PhoneOutlined />}>
-                <Link to="/SuperAdmin/AddPGToUser">Search PG</Link>
+                <Link to="/User/PGUserInfo">PG User Info </Link>
               </Menu.Item>
             </Menu>
           </Sider>
