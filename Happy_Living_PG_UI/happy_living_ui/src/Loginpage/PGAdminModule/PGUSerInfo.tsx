@@ -10,6 +10,8 @@ import { Layout, Menu, Button, theme, message, Checkbox, Table } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
+import AddRoom from "./AddRoom";
+import AddUser from "./AddUser";
 
 const { Header, Sider, Content } = Layout;
 
@@ -69,6 +71,28 @@ const PGADminUSerInfo: React.FC = () => {
       .catch((error) => {
         message.error(error.response.data.message);
       });
+  };
+
+  const deleteworker = (record: any) => {
+    console.log(record.pgUser_Id);
+    axios
+      .delete(
+        `/api/PGAdmin/DeleteWorker?Id=${record.pgUser_Id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          },
+        }
+      )
+      .then((response: any) => {
+        message.success("Successfully Deleted");
+      })
+      .catch((error: any) => {
+        message.error(error.message);
+      });
+    window.location.reload();
   };
 
   const columns: any = [
@@ -167,6 +191,19 @@ const PGADminUSerInfo: React.FC = () => {
       dataIndex: "stetus",
       key: "stetus",
     },
+    {
+      //for actionsss
+      key: "actions",
+      render: (text: any, record: any) => {
+        return (
+          <div hidden={!record.checked}>
+            <Button type="primary" danger onClick={() => deleteworker(record)}>
+              Delete
+            </Button>
+          </div>
+        );
+      },
+    },
   ];
 
   return (
@@ -198,6 +235,9 @@ const PGADminUSerInfo: React.FC = () => {
           <Menu.Item key="4" icon={<HomeOutlined />}>
             <Link to="/PGAdmin/PGRoomInfo">Room Info</Link>
           </Menu.Item>
+          <Menu.Item key="5" icon={<HomeOutlined />}>
+            <Link to="/PGAdmin/PGAdminProfile">PG Admin Profile</Link>
+          </Menu.Item>
           <Menu.Item key="6" icon={<ProfileOutlined />}>
             <Link to="/PGAdmin/Suggestion&Compliant">
               Compliants/Suggestions
@@ -214,6 +254,8 @@ const PGADminUSerInfo: React.FC = () => {
             background: colorBgContainer,
           }}
         >
+          <h1>Add Rooms</h1>
+          <AddUser />
           <Table
             bordered
             columns={columns}

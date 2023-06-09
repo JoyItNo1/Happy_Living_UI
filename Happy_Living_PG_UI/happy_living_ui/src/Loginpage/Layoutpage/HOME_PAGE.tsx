@@ -24,6 +24,7 @@ import PGWorkers from "../PGAdminModule/PGWorkers";
 import PGUserInfo from "../UserModule/PGUserInfo";
 import RoomInfo from "../PGAdminModule/PGRoomInfo";
 import SuggestionCompliant from "../PGAdminModule/PGSuggestionCompliant";
+import AdminProfile from "../PGAdminModule/PGAdminProfile";
 const { Content } = Layout;
 
 const Home = () => { 
@@ -140,6 +141,12 @@ const Home = () => {
               "isAuthenticated" ? <RoomInfo /> : <Navigate to="/" replace />
             }
           /> 
+          <Route
+            path="/PGAdmin/PGAdminProfile"
+            element={
+              "isAuthenticated" ? <AdminProfile /> : <Navigate to="/" replace />
+            }
+          />
           <Route
             path="/PGAdmin/Suggestion&Compliant"
             element={

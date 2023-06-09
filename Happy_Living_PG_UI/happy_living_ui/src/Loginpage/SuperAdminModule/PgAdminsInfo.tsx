@@ -11,6 +11,7 @@ import {
   ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import React from "react";
 
 const PgAdminsInfo = () => {
   const [tableData, setData] = useState([]);

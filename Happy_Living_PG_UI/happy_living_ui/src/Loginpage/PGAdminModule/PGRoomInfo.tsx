@@ -159,6 +159,9 @@ const RoomInfo: React.FC = () => {
           <Menu.Item key="4" icon={<HomeOutlined />}>
             <Link to="/PGAdmin/PGRoomInfo">Room Info</Link>
           </Menu.Item>
+          <Menu.Item key="5" icon={<HomeOutlined />}>
+            <Link to="/PGAdmin/PGAdminProfile">PG Admin Profile</Link>
+          </Menu.Item>
           <Menu.Item key="6" icon={<ProfileOutlined />}>
             <Link to="/PGAdmin/Suggestion&Compliant">
               Compliants/Suggestions

@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
     })
       .then((r: any) => {
         sessionStorage.setItem("token", r.data.token);
-        sessionStorage.setItem("Admin_Id", r.data.admin_Id);
+        sessionStorage.setItem("admin_Id", r.data.admin_Id);
         sessionStorage.setItem("Role_Id", r.data.role_Id);
         console.log(r.data.Admin_Id);
         debugger;

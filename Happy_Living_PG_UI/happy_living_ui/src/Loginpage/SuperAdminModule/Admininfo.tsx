@@ -1,4 +1,4 @@
-import { Card, Layout, Menu, Table, message, theme } from "antd";
+import { Card, Descriptions, Layout, Menu, Table, message, theme } from "antd";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Sider from "antd/es/layout/Sider";
@@ -10,6 +10,7 @@ import {
   ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import React from "react";
 
 const SuperAdminInfo = () => {
   const [tableData, setData] = useState([]);
@@ -26,6 +27,13 @@ const SuperAdminInfo = () => {
   const handleMenuClick = (e: any) => {
     setSelectedKeys([e.key]);
   };
+  const [userProfile, setUserProfile] = useState<AdminInfo | null>(null);
+  const AdminID = localStorage.getItem("admin_Id");
+  interface AdminInfo {
+    Name: string;
+    Email: string;
+    Phone_Number: number;
+  }
 
   const columns: any = [
     {
@@ -75,13 +83,12 @@ const SuperAdminInfo = () => {
       dataIndex: "created_date",
       key: "created_date",
     },
- 
   ];
 
   useEffect(() => {
     getData();
   }, []);
-  var AdminID = sessionStorage.getItem("Admin_Id");
+
   console.log(AdminID);
   const getData = () => {
     axios({
@@ -96,7 +103,6 @@ const SuperAdminInfo = () => {
       .then((r: any) => {
         console.log(r.data);
         setData(r.data);
-        message.success("Data is loaded");
       })
       .catch((error: any) => {
         message.error(error.message);
@@ -140,15 +146,22 @@ const SuperAdminInfo = () => {
             marginTop: 16,
             paddingTop: 35,
             background:
-              "-webkit-linear-gradient(45deg,rgba(9, 0, 159, 0.2), rgba(0, 255, 149, 0.2) 55%)",
+              "linear-gradient(45deg,rgba(9, 0, 159, 0.2), rgba(0, 255, 149, 0.2) 55%)",
           }}
         >
-          <Table
+          {/* <Table
             bordered
             columns={columns}
             dataSource={tableData}
             pagination={false}
-          ></Table>
+          ></Table> */}
+
+          <UserOutlined />
+          <Descriptions title="User Info">
+            <Descriptions.Item label="Name"> {userProfile?.Name}</Descriptions.Item>
+            <Descriptions.Item label="Phone Number"> {userProfile?.Phone_Number}</Descriptions.Item>
+            <Descriptions.Item label="Email"> {userProfile?.Email} </Descriptions.Item>
+          </Descriptions>
         </Card>
       </Layout>
     </div>
