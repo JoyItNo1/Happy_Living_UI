@@ -14,7 +14,6 @@ import { Link, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 // const [currentUser, setCurrentUser] = useState("");
 
-
 const AdminDashboard: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -23,8 +22,8 @@ const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState("");
   const [pageSize, setPageSize] = useState(5);
-const [selectedKeys, setSelectedKeys] = useState<Array<any>>([]);
-  
+  const [selectedKeys, setSelectedKeys] = useState<Array<any>>([]);
+
   const onCollapse = (collapsed: any) => {
     setCollapsed(collapsed);
   };
@@ -35,35 +34,37 @@ const [selectedKeys, setSelectedKeys] = useState<Array<any>>([]);
   return (
     <Layout>
       <Sider
-            collapsible
-            collapsed={collapsed}
-            onCollapse={onCollapse}
-            style={{ marginTop: 0 }}
-          >
-            <div className="logo" />
+        collapsible
+        collapsed={collapsed}
+        onCollapse={onCollapse}
+        style={{ marginTop: 0 }}
+      >
+        <div className="logo" />
 
-            <Menu
-              theme="dark"
-              onClick={handleMenuClick}
-              mode="inline"
-              style={{ marginTop: 5 }}
-              selectedKeys={selectedKeys}
-            >
+        <Menu
+          theme="dark"
+          onClick={handleMenuClick}
+          mode="inline"
+          style={{ marginTop: 5 }}
+          selectedKeys={selectedKeys}
+        >
           <Menu.Item key="" icon={<InfoOutlined />}>
             <Link to="/PGAdmin/AdminDashboard">Dashboard</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<UserOutlined />}>
-            <Link to="/PGAdmin/PGWorkers">Worker info</Link>
+            <Link to="/PGAdmin/PGWorkers">Workers info</Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<UsergroupDeleteOutlined />}>
             <Link to="/PGAdmin/PGUserInfo">PG UserInfo</Link>
           </Menu.Item>
-          {/* <Menu.Item key="4" icon={<HomeOutlined />}>
-            <Link to="">PgInfo & Location</Link>
+          <Menu.Item key="4" icon={<HomeOutlined />}>
+            <Link to="/PGAdmin/PGRoomInfo">Room Info</Link>
           </Menu.Item>
-          <Menu.Item key="5" icon={<ProfileOutlined />}>
-            <Link to="">User Profile</Link>
-          </Menu.Item> */}
+          <Menu.Item key="6" icon={<ProfileOutlined />}>
+            <Link to="/PGAdmin/Suggestion&Compliant">
+              Compliants/Suggestions
+            </Link>
+          </Menu.Item>
         </Menu>
       </Sider>
       <Layout>

@@ -13,7 +13,6 @@ import {
   Menu,
   Button,
   theme,
-  
   Table,
   Checkbox,
   message,
@@ -36,14 +35,12 @@ const PGWorkers: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState<Array<any>>([]);
 
-
   const onCollapse = (collapsed: any) => {
     setCollapsed(collapsed);
   };
   const handleMenuClick = (e: any) => {
     setSelectedKeys([e.key]);
   };
-  
 
   const handleCheckboxChange = (checked: boolean, record: any) => {
     const newData: any = [...tableData];
@@ -81,7 +78,7 @@ const PGWorkers: React.FC = () => {
       .then((r: any) => {
         console.log(r.data);
         setData(r.data);
-        message.success("The value has been Loaded to the table");
+        message.success("Worker Information Loaded");
       })
       .catch((error) => {
         message.error(error.response.data.message);
@@ -93,7 +90,7 @@ const PGWorkers: React.FC = () => {
     console.log(record.pgWorks_Id);
     axios
       .delete(
-        `https://localhost:7181/api/PGAdmin/DeleteWorker?Id=${record.pgWorks_Id}`,
+        `/api/PGAdmin/DeleteWorker?Id=${record.pgWorks_Id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -155,7 +152,7 @@ const PGWorkers: React.FC = () => {
     {
       title: (
         <center>
-          <b>Contact_No</b>
+          <b>Contact Number</b>
         </center>
       ),
       dataIndex: "phoneNumber",
@@ -178,61 +175,56 @@ const PGWorkers: React.FC = () => {
 
   return (
     <Layout>
-        <Sider
-            collapsible
-            collapsed={collapsed}
-            onCollapse={onCollapse}
-            style={{ marginTop: 0 }}
-          >
-            <div className="logo" />
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={onCollapse}
+        style={{ marginTop: 0 }}
+      >
+        <div className="logo" />
 
-            <Menu
-              theme="dark"
-              onClick={handleMenuClick}
-              mode="inline"
-              style={{ marginTop: 5 }}
-              selectedKeys={selectedKeys}
-            >
-<Menu.Item key="1" icon={<InfoOutlined />}>
+        <Menu
+          theme="dark"
+          onClick={handleMenuClick}
+          mode="inline"
+          style={{ marginTop: 5 }}
+          selectedKeys={selectedKeys}
+        >
+          <Menu.Item key="1" icon={<InfoOutlined />}>
             <Link to="/PGAdmin/AdminDashboard">Dashboard</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<UserOutlined />}>
-            <Link to="/PGAdmin/PGWorkers">Worker info</Link>
+            <Link to="/PGAdmin/PGWorkers">Workers info</Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<UsergroupDeleteOutlined />}>
             <Link to="/PGAdmin/PGUserInfo">PG UserInfo</Link>
           </Menu.Item>
+          <Menu.Item key="4" icon={<HomeOutlined />}>
+            <Link to="/PGAdmin/PGRoomInfo">Room Info</Link>
+          </Menu.Item>
+          <Menu.Item key="6" icon={<ProfileOutlined />}>
+            <Link to="/PGAdmin/Suggestion&Compliant">
+              Compliants/Suggestions
+            </Link>
+          </Menu.Item>
         </Menu>
       </Sider>
-
-     
       <Content
         style={{
           margin: "24px 16px",
           padding: 24,
-          minHeight: 500,
+          minHeight: 600,
           background: colorBgContainer,
         }}
       >
-        <Card
-          style={{
-            width: "100%",
-            marginTop: 16,
-            paddingTop: 35,
-            background:
-              "-webkit-linear-gradient(45deg,rgba(9, 0, 159, 0.2), rgba(0, 255, 149, 0.2) 55%)",
-          }}
-        >
-          <h1>Workers Information</h1>
-          <Addworker />
-
-          <Table
-            bordered
-            columns={columns}
-            dataSource={tableData}
-            pagination={false}
-          ></Table>
-        </Card>
+        <h1>Workers Information</h1>
+        <Addworker />
+        <Table
+          bordered
+          columns={columns}
+          dataSource={tableData}
+          pagination={false}
+        />
       </Content>
     </Layout>
   );

@@ -12,7 +12,7 @@ import {
 } from "antd";
 import axios from "axios";
 
-const Addworker: React.FC = () => {
+const AddRoom: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   //For Modal
@@ -35,11 +35,11 @@ const Addworker: React.FC = () => {
     axios({
       method: "post",
       headers: { "Content-Type": "application/json" },
-      url: "/api/PGAdmin/AddPgWorkers",
+      url: "/api/PGAdmin/AddRoom",
       data: values,
     })
       .then((r: any) => {
-        message.success("Worker Added Successfully");
+        message.success("Room Added Successfully");
       })
       .catch((error: any) => {
         message.error(error.response.data);
@@ -55,11 +55,11 @@ const Addworker: React.FC = () => {
         onClick={showModal}
         style={{ left: "40%" }}
       >
-        Add Worker
+        Add Room
       </Button>
 
       <Modal
-        title="Add worker"
+        title="Add Room"
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         footer={[
@@ -77,10 +77,10 @@ const Addworker: React.FC = () => {
           autoComplete="off"
           onFinish={onFinish}
         >
-          <h1 style={{ color: "blue" }}>Add-Worker</h1>
+          <h1 style={{ color: "blue" }}>Add Room</h1>
 
           <Form.Item
-            label="pgAdminId"
+            label=""
             name="pgAdminId"
             rules={[{ required: true, message: "Please input your ID!" }]}
           >
@@ -124,4 +124,4 @@ const Addworker: React.FC = () => {
   );
 };
 
-export default Addworker;
+export default AddRoom;
