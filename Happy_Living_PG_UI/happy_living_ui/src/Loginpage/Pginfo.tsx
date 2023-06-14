@@ -260,8 +260,23 @@ const Pginfo = () => {
         }}
       >
         <Form.Item
-          label={<b>Name</b>}
-          name="name"
+          label={<b>First Name</b>}
+          name="firstname"
+          rules={[
+            { required: true, message: "Please input your name!" },
+            {
+              pattern: /^[A-Za-z]+$/,
+              message: "Please enter alphabetic characters only!",
+            },
+          ]}
+          style={{ textAlign: "left", marginTop: "10px" }}
+        >
+          <Input autoComplete="off" />
+        </Form.Item>
+
+        <Form.Item
+          label={<b>Last Name</b>}
+          name="lastname"
           rules={[
             { required: true, message: "Please input your name!" },
             {

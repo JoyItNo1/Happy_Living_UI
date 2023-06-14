@@ -1,4 +1,3 @@
-
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, Modal, message } from "antd";
 import axios from "axios";
@@ -26,24 +25,18 @@ const LoginPage: React.FC = () => {
     })
       .then((r: any) => {
         sessionStorage.setItem("token", r.data.token);
-        sessionStorage.setItem("admin_Id", r.data.admin_Id);
+        sessionStorage.setItem("Admin_Id", r.data.admin_Id);
         sessionStorage.setItem("Role_Id", r.data.role_Id);
         console.log(r.data.Admin_Id);
         debugger;
-        if (r.data.role_Id === 1) {
-          navigate("/PGAdmin/AdminDashboard");
-          Modal.success({
-            title: "Welcome",
-            content: "Login successfull",
-          });
-        } else if (r.data.role_Id === 3) {
+        if (r.data.role_Id === 3) {
           navigate("/SuperAdmin/dashboard");
           Modal.success({
             title: "Welcome",
             content: "Login successfull",
           });
-        }else if (r.data.role_Id === 4) {
-          navigate("/User/UserDashboard");
+        } else if (r.data.role_Id === 2) {
+          navigate("/");
           Modal.success({
             title: "Welcome",
             content: "Login successfull",
@@ -116,8 +109,8 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <img
+    <div style={{ position: "relative", }}>
+      {/* <img
         src={"./Images/bgimage.jpg"}
         alt="img"
         style={{
@@ -127,24 +120,36 @@ const LoginPage: React.FC = () => {
           top: 0,
           left: 0,
         }}
-      />
+      /> */}
+      <video autoPlay muted loop style={{width:"90%", height:"90%",}}>
+  <source src="./Images/sterco-video.mp4" type="video/mp4" />
+</video>
+
       <div
         style={{
+          position: "absolute",
+          top: 40,
+          left: -330,
           width: "350px",
           height: "600px",
           //background: "linear-gradient(to bottom, #0f0c29, #302b63, #24243e)",
           //background: "linear-gradient(to bottom, #87CEEB, #ADD8E6, #00BFFF)",
           backgroundColor: "pink",
           overflow: "hidden",
-          borderRadius: "10px",
+          borderRadius: "10px 70px 10px 70px",
           boxShadow: "5px 20px 50px #000",
-          marginTop: "25px",
+          marginTop: "-10px",
           marginBottom: 50,
           marginLeft: "500px",
-          position: "absolute",
+          //position: "absolute",
         }}
-      >
-        <Card style={{ backgroundColor: "#C3B7AC" }}>
+        >
+        <Card style={{   
+          backgroundImage: 'url("./Images/lightimg.jpg")',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundColor: "#957DAD",
+          borderColor:"purple"}}>
           <Form
             onFinish={onFinish}
             form={AddProjectForm}
@@ -159,7 +164,7 @@ const LoginPage: React.FC = () => {
                   justifyContent: "center",
                   display: "flex",
                   marginBottom: 30,
-                  marginTop: 90,
+                  marginTop: 160,
                   fontWeight: "bold",
                   textShadow: "2px 2px 2px brown",
                 }}
@@ -180,7 +185,7 @@ const LoginPage: React.FC = () => {
                 },
               ]}
               name="email"
-              style={{ textAlign: "left" }}
+              style={{ textAlign: "left",color:"#800808",fontWeight:"bold" }}
             >
               <Input
                 prefix={<UserOutlined className="site-form-item-icon" />}
@@ -195,7 +200,7 @@ const LoginPage: React.FC = () => {
             </Form.Item>
             <Form.Item
               name="password"
-              style={{ textAlign: "left" }}
+              style={{ textAlign: "left",color:"#800808",fontWeight:"bold" }}
               rules={[
                 { required: true, message: "Please input your Password!" },
               ]}

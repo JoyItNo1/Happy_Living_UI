@@ -32,11 +32,25 @@ export function Register ()  {
         wrapperCol={{ span: 14 }}
         layout="horizontal"
         onFinish={onFinish}
-        style={{marginRight:"180px",marginTop:"-300px",float:"right" }}
+        style={{marginRight:"180px",marginTop:"-320px",float:"right" }}
       >
         <Form.Item
-          label={<b>Name</b>}
-          name="name"
+          label={<b>First Name</b>}
+          name="1name"
+          rules={[
+            { required: true, message: "Please input your name!" },
+            {
+              pattern: /^[A-Za-z]+$/,
+              message: "Please enter alphabetic characters only!",
+            }]}
+          style={{ textAlign: "left" }}
+        >
+         <Input autoComplete="off" />
+        </Form.Item>
+
+        <Form.Item
+          label={<b>Last Name</b>}
+          name="2name"
           rules={[
             { required: true, message: "Please input your name!" },
             {
